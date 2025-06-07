@@ -1,0 +1,47 @@
+//HTML
+<template>
+  <!-- Container for dynamically injected HTML -->
+  <div class="dynamicContainer" lwc:dom="manual"></div>
+</template>
+
+
+//JS
+import { LightningElement } from 'lwc';
+
+export default class DynamicInput extends LightningElement {
+    renderedCallback() {
+        // Prevent duplicate inputs on repeated renderings
+        if (!this._inputRendered) {
+            this._inputRendered = true;
+
+            // Select the container using class selector
+            const container = this.template.querySelector('.dynamicContainer');
+
+            // Create the input element
+            const input = document.createElement('input');
+            input.type = 'email';
+            input.placeholder = 'Enter your email address';
+            input.className = 'dynamic-email-input';
+
+            // Add inline styles for demonstration (recommended to use CSS file for large projects)
+            input.style.padding = '0.6rem';
+            input.style.borderRadius = '6px';
+            input.style.border = '1px solid #666';
+            input.style.marginTop = '14px';
+            input.style.fontSize = '1rem';
+            input.style.width = '100%';
+
+            // Optional: Listen for input changes
+            input.addEventListener('input', (event) => {
+                // Handle the change (example: log the value)
+                console.log('Email:', event.target.value);
+            });
+
+            // Append the input to the container
+            container.appendChild(input);
+        }
+    }
+}
+
+
+//Notes: This can be used in the renderedCallback
